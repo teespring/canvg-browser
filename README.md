@@ -4,7 +4,8 @@
 
 A port of [canvg](http://gabelerner.github.io/canvg) that properly works in the browser as CommonJS module.
 
-The main differences of this fork are in terms of infrastructure, so that it's as easy as possible to use in a CommonJS environment with help from `browserify`.  We've added some tests to ensure that the overall behavior is working and added `rgbcolor` and `stackblur` as npm dependencies.
+The main differences of this fork are in terms of infrastructure, so that it's as easy as possible to use in a CommonJS environment with help from `browserify`.  
+We've added some tests to ensure that the overall behavior is working and added `rgbcolor` and `stackblur` as npm dependencies.
 
 ## Installation
 `npm install canvg-browser --save`
