@@ -1,39 +1,48 @@
 {
-  "name": "canvg",
-  "description": "Javascript SVG parser and renderer on Canvas",
-  "homepage": "https://github.com/gabelerner/canvg",
+  "name": "canvg-browser",
+  "version": "0.0.1",
+  "description": "Javascript SVG parser and renderer on Canvas, adapted for CommonJS",
+  "main": "index.js",
+  "homepage": "https://github.com/bpmn-io/canvg-browser",
   "keywords": [
     "javascript",
     "client",
     "browser",
     "svg",
-    "canvas"
+    "canvas",
+    "canvg",
+    "browserify"
   ],
-  "author": "Gabe Lerner <gabelerner@gmail.com>",
+  "scripts": {
+    "test": "karma start test/config/karma.unit.js",
+    "test:watch": "karma start test/config/karma.unit.js --no-single-run --auto-watch"
+  },
+  "author": "Ricardo Matias <ricardo.matias0@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/gabelerner/canvg.git"
+    "url": "git://github.com/bpmn-io/canvg-browser.git"
   },
-  "main": "index.js",
-  "version": "0.0.1",
-  "devDependencies": {},
-  "scripts": {},
   "license": "MIT",
-  "files": [
-    "canvg.js",
-    "rgbcolor.js",
-    "StackBlur.js",
-    "MIT-LICENSE.txt"
-  ],
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "chai": "^3.5.0",
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.2",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^0.2.2",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-spec-reporter": "0.0.24",
+    "mocha": "^2.4.5",
+    "phantomjs-prebuilt": "^2.1.5",
+    "stringify": "^5.1.0",
+    "watchify": "^3.7.0"
+  },
   "dependencies": {
     "rgbcolor": "0.0.4",
     "stackblur": "^1.0.0",
     "xmldom": "^0.1.22"
   },
   "bugs": {
-    "url": "https://github.com/gabelerner/canvg/issues"
-  },
-  "directories": {
-    "example": "examples"
+    "url": "https://github.com/bpmn-io/canvg-browser/issues"
   }
 }
