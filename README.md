@@ -1,56 +1,37 @@
-Introduction
-============
-canvg is a SVG parser and renderer. It takes a URL to a SVG file or the text of an SVG file, parses it in JavaScript, and renders the result on a [Canvas](http://dev.w3.org/html5/2dcontext/) element.  The rendering speed of the examples is about as fast as native SVG.
+# canvg-browser
 
-What's implemented?
-===================
-The end goal is everything from the [SVG spec](http://www.w3.org/TR/SVG/). The majority of the rendering and animation is working.  If you would like to see a feature implemented, don't hesitate to contact me or add it to the issues list.
+[![Build Status](https://travis-ci.org/bpmn-io/canvg-browser.svg?branch=master)](https://travis-ci.org/bpmn-io/canvg-browser)
 
-Potential uses
-===============
-* Allows for inline embedding of SVG through JavaScript (w/o having to request another file or break validation)
-* Allows for single SVG version across all browsers that support Canvas
-* Allows for mobile devices supporting Canvas but not SVG to render SVG
-* Allows for SVG -> Canvas -> png transition all on the client side (through [toDataUrl](http://www.w3.org/TR/html5/the-canvas-element.html#dom-canvas-todataurl))
+A port of [canvg](http://gabelerner.github.io/canvg) that properly works in the browser as CommonJS module.
 
-Example Demonstration
-=====================
-[view here](http://gabelerner.github.io/canvg/examples/index.htm)
-Tested in Chrome, Firefox, Opera, and IE (through FlashCanvas)
+The main differences of this fork are in terms of infrastructure, so that it's as easy as possible to use in a CommonJS environment with help from `browserify`.  We've added some tests to ensure that the overall behavior is working and added `rgbcolor` and `stackblur` as npm dependencies.
 
-[jsfiddle playground](http://jsfiddle.net/L3hondLn/)
+## Installation
+`npm install canvg-browser --save`
 
-Usage
-=====
-Include the following files in your page:
+
+## Usage
+Put a canvas on your page:
+
 ```html
-<script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script> 
-<script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
-<script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script> 
+<canvas id="canvas" width="200px" height="200px"></canvas>
 ```
 
-Put a canvas on your page
-```html
-<canvas id="canvas" width="1000px" height="600px"></canvas> 
+```js
+var canvg = require('canvg-browser'),
+    canvas = document.getElementById('canvas');
+
+var options = {
+  log: false,
+  ignoreMouse: true
+};
+
+canvg(canvas, '<svg height="100" width="100"><circle cx="50" cy="50" r="40" stroke="black" /></svg>', options);
 ```
 
-Example canvg calls:
-```html
-<script type="text/javascript">
-window.onload = function() {
-  //load '../path/to/your.svg' in the canvas with id = 'canvas'
-  canvg('canvas', '../path/to/your.svg')
 
-  //load a svg snippet in the canvas with id = 'drawingArea'
-  canvg(document.getElementById('drawingArea'), '<svg>...</svg>')
+### Options
 
-  //ignore mouse events and animation
-  canvg('canvas', 'file.svg', { ignoreMouse: true, ignoreAnimation: true }) 
-}
-</script>
-```
-
-The third parameter is options:
 * log: true => console.log information
 * ignoreMouse: true => ignore mouse events
 * ignoreAnimation: true => ignore animations
@@ -73,8 +54,6 @@ var ctx = c.getContext('2d');
 ctx.drawSvg(SVG_XML_OR_PATH_TO_SVG, dx, dy, dw, dh);
 ```
 
-Related Repositories
-====================
-* [Output javascript instead of rendering to canvas](http://code.google.com/p/jscapturecanvas/)
-* [A combo of canvg & jscapturecanvas to compile SVG to Canvas (Server side)](https://github.com/nathan-muir/canvgc)
-* [Edit SVG files in your browser](https://code.google.com/p/svg-edit/)
+
+### Related Repositories
+* [canvg](http://gabelerner.github.io/canvg)
