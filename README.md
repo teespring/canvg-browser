@@ -22,12 +22,14 @@ Put a canvas on your page:
 var canvg = require('canvg-browser'),
     canvas = document.getElementById('canvas');
 
+var svg = '<svg height="100" width="100"><circle cx="50" cy="50" r="40" stroke="black" /></svg>';
+
 var options = {
   log: false,
   ignoreMouse: true
 };
 
-canvg(canvas, '<svg height="100" width="100"><circle cx="50" cy="50" r="40" stroke="black" /></svg>', options);
+canvg(canvas, svg, options);
 ```
 
 
