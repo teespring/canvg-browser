@@ -2,10 +2,10 @@
 
 [![Build Status](https://travis-ci.org/bpmn-io/canvg-browser.svg?branch=master)](https://travis-ci.org/bpmn-io/canvg-browser)
 
-A port of [canvg](http://gabelerner.github.io/canvg) that properly works in the browser as CommonJS module.
+A port of [canvg](https://github.com/gabelerner/canvg) that properly works in the browser as CommonJS module.
 
 
-## Differences to [canvg](http://gabelerner.github.io/canvg)
+## Differences to [canvg](https://github.com/gabelerner/canvg)
 
 * Exposes CommonJS module
 * Dependencies such as `rgbcolor` and `stackblur` are required in the CommonJS way, too
@@ -64,4 +64,4 @@ ctx.drawSvg(SVG_XML_OR_PATH_TO_SVG, dx, dy, dw, dh);
 
 
 ### Related Repositories
-* [canvg](http://gabelerner.github.io/canvg)
+* [canvg](https://github.com/gabelerner/canvg)
