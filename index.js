@@ -28,7 +28,9 @@ canvg(target, s)
     scaleWidth: int => scales horizontally to width
     scaleHeight: int => scales vertically to height
     renderCallback: function => will call the function after the first render is completed
+    errorCallback: function => will be called on render error (failed to load external assets)
     forceRedraw: function => will call the function on every frame, if it returns true, will redraw
+    cacheBustToken: string => token appended to external assets to prevent loading from cache
 */
 function canvg(target, s, opts) {
 
@@ -221,6 +223,14 @@ function build(opts) {
 			if (!svg.Images[i].loaded) return false;
 		}
 		return true;
+	}
+
+	// images load errors
+	svg.ImagesError = function() {
+		for (var i=0; i<svg.Images.length; i++) {
+			if (svg.Images[i].error) return true;
+		}
+		return false;
 	}
 
 	// trim
@@ -2422,8 +2432,19 @@ function build(opts) {
 			this.img = document.createElement('img');
 			if (svg.opts['useCORS'] == true) { this.img.crossOrigin = 'Anonymous'; }
 			var self = this;
-			this.img.onload = function() { self.loaded = true; }
-			this.img.onerror = function() { svg.log('ERROR: image "' + href + '" not found'); self.loaded = true; }
+
+			this.img.onload = function() {
+				self.loaded = true;
+			}
+			this.img.onerror = function() {
+				svg.log('ERROR: image "' + href + '" not found');
+				self.loaded = false;
+				self.error = true;
+			}
+			if (svg.opts['cacheBustToken'] && href.substr(0, 4) === 'http') {
+				href += '?t=' + svg.opts['cacheBustToken'];
+			}
+
 			this.img.src = href;
 		}
 		else {
@@ -2990,6 +3011,11 @@ function build(opts) {
 		}
 		svg.intervalID = setInterval(function() {
 			var needUpdate = false;
+
+			if (waitingForImages && svg.ImagesError()) {
+				if (typeof svg.opts['errorCallback'] == 'function') svg.opts['errorCallback']('Failed to load image asset');
+				svg.stop();
+			}
 
 			if (waitingForImages && svg.ImagesLoaded()) {
 				waitingForImages = false;
