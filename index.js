@@ -2465,6 +2465,7 @@ function build(opts) {
 				ctx.drawSvg(this.img, x, y, width, height);
 			}
 			else {
+				ctx.imageSmoothingQuality = 'high';
 				ctx.translate(x, y);
 				svg.AspectRatio(ctx,
 								this.attribute('preserveAspectRatio').value,
