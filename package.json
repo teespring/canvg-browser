@@ -1,6 +1,6 @@
 {
   "name": "canvg-browser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Javascript SVG parser and renderer on Canvas, adapted for CommonJS",
   "main": "index.js",
   "homepage": "https://github.com/bpmn-io/canvg-browser",
