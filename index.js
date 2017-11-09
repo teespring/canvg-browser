@@ -27,6 +27,7 @@ canvg(target, s)
     offsetY: int => draws at a y offset
     scaleWidth: int => scales horizontally to width
     scaleHeight: int => scales vertically to height
+    scaleFactor: int => draw the canvas at this scale
     renderCallback: function => will call the function after the first render is completed
     errorCallback: function => will be called on render error (failed to load external assets)
     forceRedraw: function => will call the function on every frame, if it returns true, will redraw
@@ -2953,14 +2954,15 @@ function build(opts) {
 			if (ctx.canvas.parentNode) svg.ViewPort.SetCurrent(ctx.canvas.parentNode.clientWidth, ctx.canvas.parentNode.clientHeight);
 
 			if (svg.opts['ignoreDimensions'] != true) {
+        var scale = svg.opts['canvasScaleFactor'] || 1;
 				// set canvas size
 				if (e.style('width').hasValue()) {
-					ctx.canvas.width = e.style('width').toPixels('x');
-					ctx.canvas.style.width = ctx.canvas.width + 'px';
+					ctx.canvas.width = scale * e.style('width').toPixels('x');
+					ctx.canvas.style.width = (ctx.canvas.width * scale) + 'px';
 				}
 				if (e.style('height').hasValue()) {
-					ctx.canvas.height = e.style('height').toPixels('y');
-					ctx.canvas.style.height = ctx.canvas.height + 'px';
+					ctx.canvas.height = scale * e.style('height').toPixels('y');
+					ctx.canvas.style.height = (ctx.canvas.height * scale) + 'px';
 				}
 			}
 			var cWidth = ctx.canvas.clientWidth || ctx.canvas.width;
