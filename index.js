@@ -2241,9 +2241,38 @@ function build(opts) {
 
 			for (var i=0; i<child.children.length; i++) {
 				textParent.renderChild(ctx, textParent, child, i);
+				textParent.renderTextDecoration(ctx, textParent, parent, node, i);
+			}
+		}
+
+		// https://github.com/canvg/canvg/issues/555
+		// https://scriptstock.wordpress.com/2012/06/12/html5-canvas-text-underline-workaround/
+		this.renderTextDecoration = function(ctx, textParent, parent, node, i) {
+			var textDecoration = textParent.style('text-decoration').value;
+
+			if (textDecoration == 'underline') {
+				var textColor = textParent.style('fill').value;
+				var textSize = textParent.style('font-size').value;
+				var textChilds = textParent.children || [];
+
+				textChilds.forEach(function(textChild) {
+					if (textChild.text.trim() !== "") {
+						var textContent = textChild.text;
+						var textCoordX = textChild.x;
+						var textCoordY = textChild.y;
+
+						var lineSize = Math.max(1, textSize / 15);
+						var textToMeasure = svg.compressSpaces(textContent);
+						var width = ctx.measureText(textToMeasure).width;
+
+						ctx.fillStyle = textColor;
+						ctx.fillRect(textCoordX, textCoordY + (textSize / 10), width, lineSize);
+					}
+				});
 			}
 		}
 	}
+
 	svg.Element.text.prototype = new svg.Element.RenderedElementBase;
 
 	// text base
