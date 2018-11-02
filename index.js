@@ -77,6 +77,10 @@ function canvg(target, s, opts) {
 	}
 }
 
+function isLocalUrl(url) {
+  return !!(url && url.match(/^blob:/));
+}
+
 function getMatchesSelector() {
   // see https://developer.mozilla.org/en-US/docs/Web/API/Element.matches
   var matchesSelector;
@@ -2454,6 +2458,7 @@ function build(opts) {
 
 		var href = this.getHrefAttribute().value;
 		if (href == '') { return; }
+		var localUrl = this.attribute('data-local-url').value || '';
 		var isSvg = href.match(/\.svg$/)
 
 		svg.Images.push(this);
@@ -2467,15 +2472,19 @@ function build(opts) {
 				self.loaded = true;
 			}
 			this.img.onerror = function() {
-				svg.log('ERROR: image "' + href + '" not found');
-				self.loaded = false;
-				self.error = true;
+				if (isLocalUrl(self.img.src)) {
+					self.img.src = href;
+				} else {
+					svg.log('ERROR: image "' + href + '" not found');
+					self.loaded = false;
+					self.error = true;
+				}
 			}
 			if (svg.opts['cacheBustToken'] && href.substr(0, 4) === 'http') {
 				href += '?t=' + svg.opts['cacheBustToken'];
 			}
 
-			this.img.src = href;
+			this.img.src = isLocalUrl(localUrl) ? localUrl : href;
 		}
 		else {
 			this.img = svg.ajax(href);
