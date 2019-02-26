@@ -4,6 +4,12 @@
  var stackblur = require('stackblur');
  var xmldom = require('xmldom');
 
+ var isNode = new Function("try {return this===global && !!(new JSDOM(''));}catch(e){return false;}")();
+
+ var window = isNode ? (new JSDOM('')).window : new Function("return window")();
+ var document = window.document;
+ var Element = window.Element;
+
 /*
  * canvg.js - Javascript SVG parser and renderer on Canvas
  * MIT Licensed
@@ -268,7 +274,7 @@ function build(opts) {
 		}
 		else if (window.DOMParser)
 		{
-			var parser = new DOMParser();
+			var parser = new window.DOMParser();
 			return parser.parseFromString(xml, 'text/xml');
 		}
 		else
